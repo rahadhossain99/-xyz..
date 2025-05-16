@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সান্ডা সমাহার - আলট্রা-প্রিমিয়াম সান্ডা কিনুন ভুবন কাঁপানো হাসিতে!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #FFFDE7; /* একটু ভিন্ন হালকা হলুদ */
+            color: #5D4037; /* একটু ভিন্ন গাঢ় বাদামী */
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #FFB74D, #FF8A65); /* নতুন কমলা গ্রেডিয়েন্ট */
+        }
+        .btn-primary {
+            background-color: #FF7043; /* উজ্জ্বল কমলা */
+            color: white;
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 12px rgba(255, 112, 67, 0.3);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px; /* More pill-shaped */
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background-color: #FF5722; /* গাঢ় কমলা */
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 112, 67, 0.4);
+        }
+        .btn-secondary {
+            background-color: #795548; /* বাদামী */
+            color: white;
+            transition: all 0.3s ease-in-out;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+        .btn-secondary:hover {
+            background-color: #5D4037;
+            transform: translateY(-2px);
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            overflow: hidden;
+            border: 1px solid #FFE0B2; /* হালকা বর্ডার */
+        }
+        .card:hover {
+            transform: translateY(-12px) scale(1.04);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.25), 0 15px 25px -10px rgba(0,0,0,0.1);
+        }
+        .nav-link {
+            transition: color 0.3s ease, transform 0.3s ease;
+            color: #6D4C41;
+            position: relative;
+            padding-bottom: 6px; /* Increased padding */
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: #FF7043;
+            transform: translateY(-3px);
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2.5px; /* Thicker underline */
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #FF7043;
+            transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .funny-text-section {
+            background-color: #FFF9C4; /* উজ্জ্বল হলুদ */
+            border-radius: 20px;
+            padding: 3rem;
+            border: 2px dashed #FFCC80;
+        }
+        .product-image {
+            width: 100%;
+            height: 280px; /* Increased height */
+            object-fit: cover;
+            border-bottom: 3px solid #FFB74D;
+        }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background-color: #FFFDE7;
+            margin: 8% auto;
+            padding: 35px;
+            border: 2px solid #FFB74D;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 650px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            animation: slideDownModal 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        @keyframes slideDownModal {
+            from {transform: translateY(-60px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+        .close-btn {
+            color: #FF7043;
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #4A3B31;
+            text-decoration: none;
+            cursor: pointer;
+            transform: rotate(90deg);
+        }
+        @media print {
+            body * { visibility: hidden; }
+            #billModalContent, #billModalContent * { visibility: visible; }
+            #billModalContent {
+                position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 20px;
+                border: none; box-shadow: none; background-color: white !important; color: black !important;
+            }
+            #billModalContent .btn-primary, #billModalContent .btn-secondary, #billModalContent .close-btn { display: none; }
+            #billModalContent h2, #billModalContent h3 { color: black !important; }
+            #billModalContent td, #billModalContent th { border: 1px solid #ccc; color: black !important; }
+        }
+        /* Preloader styles */
+        #preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 99999;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            background: #FFFDE7 url('https://placehold.co/100x100/FFB74D/5D4037?text=🦎&font=Hind%20Siliguri&fontsize=50') no-repeat center center;
+        }
+        .sanda-fact-box {
+            background: linear-gradient(to right, #FFF9C4, #FFECB3);
+            border: 2px dashed #FFB74D;
+            color: #BF360C;
+        }
+        .faq-item .faq-question { cursor: pointer; }
+        .faq-item .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="preloader"></div>
+
+    <nav class="bg-amber-100/80 backdrop-blur-md p-5 shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-4xl font-bold text-amber-700 hover:text-amber-600 transition-colors flex items-center">
+                <img src="https://placehold.co/50x50/FFB74D/5D4037?text=🦎&font=Hind%20Siliguri&fontsize=30" alt="লোগো" class="mr-3 rounded-full">
+                সান্ডা সমাহার 🌟
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#products" class="nav-link text-lg">আমাদের সান্ডা</a>
+                <a href="#sanda-care" class="nav-link text-lg">সান্ডা কেয়ার</a>
+                <a href="#gallery" class="nav-link text-lg">গ্যালারি</a>
+                <a href="#why-us" class="nav-link text-lg">কেন আমরা?</a>
+                <a href="#faq" class="nav-link text-lg">জিজ্ঞাসা</a>
+                <a href="#testimonials" class="nav-link text-lg">ক্রেতাদের কথা</a>
+                <a href="#contact" class="nav-link text-lg">যোগাযোগ</a>
+            </div>
+            <button id="mobileMenuButton" class="md:hidden text-amber-700 text-3xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden mt-4 space-y-2 bg-amber-50 p-4 rounded-lg shadow-md">
+            <a href="#products" class="block nav-link text-lg text-center">আমাদের সান্ডা</a>
+            <a href="#sanda-care" class="block nav-link text-lg text-center">সান্ডা কেয়ার</a>
+            <a href="#gallery" class="block nav-link text-lg text-center">গ্যালারি</a>
+            <a href="#why-us" class="block nav-link text-lg text-center">কেন আমরা?</a>
+            <a href="#faq" class="block nav-link text-lg text-center">জিজ্ঞাসা</a>
+            <a href="#testimonials" class="block nav-link text-lg text-center">ক্রেতাদের কথা</a>
+            <a href="#contact" class="block nav-link text-lg text-center">যোগাযোগ</a>
+        </div>
+    </nav>
+
+    <header class="hero-bg py-20 md:py-28 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <!-- Subtle pattern or SVG background -->
+        </div>
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+            <div class="md:w-3/5 text-center md:text-left mb-12 md:mb-0">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.35);">
+                    দেশের <span class="text-yellow-300 animate-pulse inline-block">মহাকাব্যিক প্রিমিয়াম</span> সান্ডা, হাসতে হাসতে কিনুন!
+                </h1>
+                <p class="text-xl md:text-2xl text-yellow-50 mb-10" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.25);">
+                    মরুভূমির বালি ঝেড়ে, সোজা আপনার কোলে লাফিয়ে পড়বে আমাদের বিশ্বসেরা সান্ডারা! এরা শুধু পোষা প্রাণী নয়, এরা কমেডিয়ান, দার্শনিক এবং মাঝে মাঝে আপনার নেটফ্লিক্সের পাসওয়ার্ডও হ্যাক করতে পারে (সাবধান!)।
+                </p>
+                <a href="#products" class="btn-primary text-xl inline-flex items-center group">
+                    আপনার জীবনের কমেডিয়ান সান্ডা খুঁজুন!
+                    <i class="fas fa-paw ml-3 transform group-hover:rotate-12 transition-transform"></i>
+                </a>
+            </div>
+            <div class="md:w-2/5 flex justify-center">
+                <img src="https://placehold.co/550x450/FFECB3/4A3B31?text=সান্ডা+সুপারস্টার+😎✨&font=Hind%20Siliguri" alt="স্টাইলিশ সান্ডা" class="rounded-3xl shadow-2xl w-full max-w-md transform hover:scale-110 hover:rotate-3 transition-all duration-500 ease-in-out" onerror="this.src='https://placehold.co/550x450/FFECB3/4A3B31?text=ছবি+নেই+😭&font=Hind%20Siliguri'">
+            </div>
+        </div>
+    </header>
+
+    <section id="sanda-fact" class="py-12 bg-amber-50 fade-in-section">
+        <div class="container mx-auto px-6 text-center">
+            <div class="sanda-fact-box p-6 rounded-xl shadow-lg inline-block">
+                <h3 class="text-2xl font-bold mb-2 text-amber-800"><i class="fas fa-lightbulb mr-2"></i>দিনের সান্ডা-তথ্য!</h3>
+                <p id="dailySandaFact" class="text-lg"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-20 px-6 fade-in-section">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-amber-800 mb-4">
+                আমাদের <span class="text-amber-600 underline decoration-wavy decoration-amber-500">চমকপ্রদ</span> সান্ডা বাহিনী
+            </h2>
+            <p class="text-center text-xl text-gray-600 mb-16">প্রতিটি সান্ডা একটি জীবন্ত কমেডি শো, গ্যারান্টিসহ!</p>
+            <div id="productList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                </div>
+        </div>
+    </section>
+    
+    <section id="sanda-care" class="py-20 px-6 bg-amber-100 fade-in-section">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-amber-800 mb-16">
+                সান্ডা পালনের <span class="text-amber-600">মজার টিপস!</span> 🦎💡
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl text-amber-500 mb-4"><i class="fas fa-tv"></i></div>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">রিমোট কন্ট্রোল কূটনীতি</h3>
+                    <p class="text-gray-600">সান্ডা যদি আপনার টিভি রিমোট দখল করে, শান্ত থাকুন। আলোচনার মাধ্যমে একটি গ্রহণযোগ্য চ্যানেল তালিকা তৈরি করুন। মনে রাখবেন, তাদের পছন্দ সাধারণত অ্যানিম্যাল প্ল্যানেট বা কমেডি সেন্ট্রাল।</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl text-amber-500 mb-4"><i class="fas fa-utensils"></i></div>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">খাবার নিয়ে নাটক</h3>
+                    <p class="text-gray-600">সান্ডারা মাঝে মাঝে খাবারের ব্যাপারে খুব খুঁতখুঁতে হতে পারে। যদি সে আপনার দেওয়া গাজর না খেয়ে পিজ্জার দিকে তাকিয়ে থাকে, বুঝবেন সে ইতালিয়ান খাবার পছন্দ করে (কিন্তু দেবেন না!)।</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl text-amber-500 mb-4"><i class="fas fa-moon"></i></div>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">চাঁদে যাওয়ার বায়না</h3>
+                    <p class="text-gray-600">যদি আপনার সান্ডা রাতে চাঁদের দিকে তাকিয়ে দীর্ঘশ্বাস ফেলে, তাহলে সে হয়তো চাঁদে জমি কেনার স্বপ্ন দেখছে। একটি ছোট খেলনা রকেট কিনে দিতে পারেন।</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl text-amber-500 mb-4"><i class="fas fa-wifi"></i></div>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">ওয়াইফাই পাসওয়ার্ড</h3>
+                    <p class="text-gray-600">অবাক হবেন না যদি আপনার সান্ডা ওয়াইফাই পাসওয়ার্ড জেনে যায় এবং গভীর রাতে ইউটিউবে টিকটিকি নাচের ভিডিও দেখে। তাদের বুদ্ধিমত্তাকে অবহেলা করবেন না!</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl text-amber-500 mb-4"><i class="fas fa-book-reader"></i></div>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">সাহিত্যচর্চা</h3>
+                    <p class="text-gray-600">কিছু সান্ডা সাহিত্যপ্রেমী হয়। বালির উপর লেজ দিয়ে কবিতা লেখার চেষ্টা করতে পারে। একটি ছোট নোটপ্যাড ও পেন্সিল (খাওয়ার অনুপযোগী) দিয়ে দেখতে পারেন।</p>
+                </div>
+                 <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl text-amber-500 mb-4"><i class="fas fa-microphone-alt"></i></div>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">কনসার্টের আয়োজন</h3>
+                    <p class="text-gray-600">যদি আপনার সান্ডা মাঝরাতে অদ্ভুত শব্দ করে, সে সম্ভবত একটি রক কনসার্টের মহড়া দিচ্ছে। তাকে একটি মিনি গিটার (খেলনা) উপহার দিন, কে জানে, সে পরবর্তী রকস্টারও হতে পারে!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 px-6 fade-in-section">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-amber-800 mb-16">
+                সান্ডা <span class="text-amber-600">সেলিব্রিটিদের</span> পোজ! 📸✨
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                <!-- Gallery images - increased to 12 for more variety -->
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFE0B2/6D4C41?text=পোজমাস্টার+সান্ডা🕺&font=Hind%20Siliguri" alt="সান্ডা ছবি ১" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFF3E0/4A3B31?text=ঘুমকাতুরে+সান্ডা😴&font=Hind%20Siliguri" alt="সান্ডা ছবি ২" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFCC80/6D4C41?text=খেলুড়ে+সান্ডা⚽&font=Hind%20Siliguri" alt="সান্ডা ছবি ৩" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFE0B2/4A3B31?text=ফ্যাশনদুরস্ত+সান্ডা🕶️&font=Hind%20Siliguri" alt="সান্ডা ছবি ৪" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFF8E1/6D4C41?text=লাজুক+সান্ডা🙈&font=Hind%20Siliguri" alt="সান্ডা ছবি ৫" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFECB3/4A3B31?text=রাজকীয়+সান্ডা👑&font=Hind%20Siliguri" alt="সান্ডা ছবি ৬" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFE0B2/6D4C41?text=দুষ্টু+সান্ডা😈&font=Hind%20Siliguri" alt="সান্ডা ছবি ৭" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFF3E0/4A3B31?text=সাহসী+সান্ডা🦸&font=Hind%20Siliguri" alt="সান্ডা ছবি ৮" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FFEBEE/4A3B31?text=সান্ডা+ইন+থট🤔&font=Hind%20Siliguri" alt="সান্ডা ছবি ৯" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/E0F2F1/4A3B31?text=কফিপ্রেমী+সান্ডা☕&font=Hind%20Siliguri" alt="সান্ডা ছবি ১০" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/FCE4EC/4A3B31?text=댄싱+সান্ডা💃&font=Hind%20Siliguri" alt="সান্ডা ছবি ১১" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <img src="https://placehold.co/400x400/F1F8E9/4A3B31?text=গার্ডেনার+সান্ডা🌿&font=Hind%20Siliguri" alt="সান্ডা ছবি ১২" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" onerror="this.src='https://placehold.co/400x400/grey/white?text=ছবি+নেই😩'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="py-20 px-6 bg-amber-50 fade-in-section">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-amber-800 mb-10">
+                সান্ডা কিনবেন? <span class="text-amber-600">আমাদের থেকেই কেন?</span> আরে বাবা, কারণ...
+            </h2>
+            <div class="funny-text-section max-w-4xl mx-auto shadow-xl">
+                <p class="text-xl text-amber-700 mb-8">
+                    আমাদের সান্ডারা শুধু পোষা প্রাণী নয়, এরা একেকজন মহাতারকা! তাদের জীবনবৃত্তান্তে লেখা থাকে: "বিশেষ দক্ষতা - মালিকের মুখে হাসি ফোটানো এবং ফ্রিজের খাবার গোপনে সাবাড় করা"। আরও যা যা পাবেন:
+                </p>
+                <ul class="list-none text-left text-amber-700 space-y-5 text-lg">
+                    <li class="flex items-start"><span class="text-3xl mr-4 text-amber-600"><i class="fas fa-brain"></i></span> আমাদের সান্ডারা কোয়ান্টাম ফিজিক্স নিয়ে আলোচনা করতে পারে (অবশ্যই তাদের নিজস্ব টিকটিকি ভাষায়)।</li>
+                    <li class="flex items-start"><span class="text-3xl mr-4 text-amber-600"><i class="fas fa-hat-wizard"></i></span> প্রতিটি সান্ডার সাথে ফ্রি পাচ্ছেন একটি অদৃশ্য সুপারহিরো কেপ এবং একটি অতি ক্ষুদ্র সানগ্লাস।</li>
+                    <li class="flex items-start"><span class="text-3xl mr-4 text-amber-600"><i class="fas fa-laugh-beam"></i></span> এরা কমেডিয়ান, মোটিভেশনাল স্পিকার এবং মাঝে মাঝে আপনার বিছানার নিচে লুকিয়ে থাকা রহস্যময় ভিলেন!</li>
+                    <li class="flex items-start"><span class="text-3xl mr-4 text-amber-600"><i class="fas fa-user-secret"></i></span> আপনার গোপন কথা? সান্ডাদের কাছে সুরক্ষিত... যদি না তারা ঘুষ হিসেবে অতিরিক্ত পোকা পায়।</li>
+                    <li class="flex items-start"><span class="text-3xl mr-4 text-amber-600"><i class="fas fa-rocket"></i></span> জরুরী ঘোষণা: কোনো সান্ডা যদি মঙ্গল গ্রহে যাওয়ার জন্য লাগেজ গোছাতে শুরু করে, অনুগ্রহ করে আমাদের দ্রুততম রকেটে খবর দিন!</li>
+                </ul>
+                <img src="https://placehold.co/400x280/FFF9C4/4A3B31?text=মহাজ্ঞানী+সান্ডা+🧘‍♂️💡&font=Hind%20Siliguri" alt="বুদ্ধিমান সান্ডা" class="mx-auto mt-10 rounded-2xl shadow-lg transform hover:rotate-[-3deg] hover:scale-105 transition-transform" onerror="this.src='https://placehold.co/350x250/FFF9C4/4A3B31?text=ছবি+নেই+😕&font=Hind%20Siliguri'">
+            </div>
+        </div>
+    </section>
+    
+    <section id="faq" class="py-20 px-6 bg-white fade-in-section">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-amber-800 mb-16">
+                সচরাচর জিজ্ঞাসিত <span class="text-amber-600">(এবং কিছু অদ্ভুত)</span> প্রশ্নাবলী 🤔
+            </h2>
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="faq-item bg-amber-50 p-6 rounded-xl shadow-md">
+                    <div class="faq-question flex justify-between items-center text-xl font-semibold text-amber-700">
+                        <span>আমার সান্ডা কি বাংলা সিনেমা দেখে?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 text-lg">
+                        অবশ্যই! বিশেষ করে যখন শাবানা ম্যাডাম কান্না করেন, তখন তারাও নাকি টিস্যু পেপার খোঁজে। তবে ওদের ফেভারিট সম্ভবত ডিপজল সাহেবের ডায়লগ।
+                    </div>
+                </div>
+                <div class="faq-item bg-amber-50 p-6 rounded-xl shadow-md">
+                    <div class="faq-question flex justify-between items-center text-xl font-semibold text-amber-700">
+                        <span>সান্ডারা কি রাতে পার্টি করে?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 text-lg">
+                        শোনা যায়, আপনি ঘুমিয়ে পড়লে তারা নাকি 'সাইলেন্ট ডিস্কো' আয়োজন করে। সকালে যদি দেখেন আপনার হেডফোন এলোমেলো, বুঝবেন পার্টি হিট ছিল!
+                    </div>
+                </div>
+                <div class="faq-item bg-amber-50 p-6 rounded-xl shadow-md">
+                    <div class="faq-question flex justify-between items-center text-xl font-semibold text-amber-700">
+                        <span>সান্ডা কি আমার হোমওয়ার্ক করে দেবে?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 text-lg">
+                        যদি আপনার হোমওয়ার্ক হয় "সবচেয়ে আরামদায়ক ঘুমানোর ভঙ্গি কোনটি" বিষয়ে, তাহলে হয়তো সাহায্য পেতে পারেন। অন্যথায়, তারা শুধু আপনার বইয়ের উপর ঘুমিয়ে পড়বে।
+                    </div>
+                </div>
+                <div class="faq-item bg-amber-50 p-6 rounded-xl shadow-md">
+                    <div class="faq-question flex justify-between items-center text-xl font-semibold text-amber-700">
+                        <span>সান্ডা ডেলিভারি চার্জ কত?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-4 text-gray-600 text-lg">
+                        আমাদের সান্ডারা নিজেরাই হেঁটে হেঁটে চলে আসে... যদি পথে কোনো আকর্ষণীয় পোকা বা আইসক্রিমের দোকান না পায়। তবে সাধারণত, স্ট্যান্ডার্ড ডেলিভারি চার্জ প্রযোজ্য (এবং এক প্যাকেট পোকা বিস্কুট উৎকোচ হিসেবে!)।
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-20 px-6 bg-amber-100 fade-in-section">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-amber-800 mb-16">
+                আমাদের <span class="text-amber-600">হাসিখুশি</span> ক্রেতারা যা বলেন... 😂🎉
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="bg-white p-8 rounded-2xl shadow-xl transform hover:shadow-2xl transition-shadow duration-300 relative">
+                    <img src="https://placehold.co/80x80/FFD180/4A3B31?text=🧐&font=Hind%20Siliguri" alt="ক্রেতা" class="w-20 h-20 rounded-full absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-lg">
+                    <p class="text-gray-700 italic mt-8 mb-5 text-lg">"আমার 'প্রফেসর সান্ডা' সারাদিন এমন ভাব ধরে যেন সে আইনস্টাইনের থিওরি অফ রিলেটিভিটি নিয়ে গবেষণা করছে। মাঝে মাঝে তাকে আমার ল্যাপটপের দিকে তাকিয়ে থাকতে দেখি, মনে হয় কোডিং শিখছে!"</p>
+                    <div class="text-right">
+                        <p class="font-semibold text-amber-700">- একজন জ্ঞানপিপাসু ক্রেতা</p>
+                        <div class="text-yellow-400 mt-1">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-xl transform hover:shadow-2xl transition-shadow duration-300 relative">
+                    <img src="https://placehold.co/80x80/FFAB40/FFFFFF?text=💃&font=Hind%20Siliguri" alt="ক্রেতা" class="w-20 h-20 rounded-full absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-lg">
+                    <p class="text-gray-700 italic mt-8 mb-5 text-lg">"'নাচুনে সান্ডা' কেনার পর থেকে আমার বাড়িতে ২৪/৭ ডান্স পার্টি! সে যখন নাচে, তখন আমার পোষা বিড়ালও তাল মেলায়। তবে মাঝে মাঝে ওর নাচের স্টেপ একটু বেশিই আধুনিক হয়ে যায়!"</p>
+                    <div class="text-right">
+                        <p class="font-semibold text-amber-700">- এক নৃত্যপ্রেমী পরিবার</p>
+                        <div class="text-yellow-400 mt-1">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-xl transform hover:shadow-2xl transition-shadow duration-300 relative md:col-span-2 lg:col-span-1">
+                     <img src="https://placehold.co/80x80/FFCC80/4A3B31?text=🧑‍🍳&font=Hind%20Siliguri" alt="ক্রেতা" class="w-20 h-20 rounded-full absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-lg">
+                    <p class="text-gray-700 italic mt-8 mb-5 text-lg">"আমার 'শেফ সান্ডা' রান্নাঘরে ঢুকে এমন সব কাণ্ড করে! সেদিন সে আমার নুডলসের প্যাকেটে শুয়ে ছিল, ভাবছিল ওটা নাকি ওর স্পা বেড। তবে ওর রান্নার চেষ্টা প্রশংসনীয় (যদিও অখাদ্য)!"</p>
+                    <div class="text-right">
+                        <p class="font-semibold text-amber-700">- একজন ভোজনরসিক (এবং সাহসী) ক্রেতা</p>
+                        <div class="text-yellow-400 mt-1">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 px-6 bg-amber-50 fade-in-section">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-amber-800 mb-10">যোগাযোগ করুন, <span class="text-amber-600">যদি আপনার সান্ডা কথা না শোনে!</span> 😉</h2>
+            <p class="text-xl text-amber-700 mb-10 max-w-3xl mx-auto">
+                আপনার সান্ডার জন্য নতুন জোকস, ফ্যাশন টিপস, অথবা যদি আপনার সান্ডা কোনো মহাজাগতিক ষড়যন্ত্রে লিপ্ত থাকে (যেমন, আপনার মোজা চুরি করে এলিয়েনদের কাছে পাঠানো), আমাদের জানান! আমরা আছি আপনার হাসির খোরাক যোগাতে।
+            </p>
+            <form id="contactForm" class="max-w-2xl mx-auto bg-white p-10 rounded-2xl shadow-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-amber-700 text-sm font-bold mb-2 text-left">আপনার রাজকীয় নাম</label>
+                        <input type="text" id="name" name="name" class="shadow-md appearance-none border-2 border-amber-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="যেমন: সান্ডা সম্রাট আকবর" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-amber-700 text-sm font-bold mb-2 text-left">আপনার ডিজিটাল পত্রবাহক (ইমেইল)</label>
+                        <input type="email" id="email" name="email" class="shadow-md appearance-none border-2 border-amber-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="akbar@sanda.world" required>
+                    </div>
+                </div>
+                <div class="mb-8">
+                    <label for="message" class="block text-amber-700 text-sm font-bold mb-2 text-left">আপনার মহামূল্যবান (বা মজাদার) বার্তা</label>
+                    <textarea id="message" name="message" rows="5" class="shadow-md appearance-none border-2 border-amber-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="আমার সান্ডাটা সারারাত ধরে টিকটক ভিডিও বানাচ্ছে, কীভাবে থামাবো?" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary font-bold py-4 px-10 text-xl w-full transform hover:scale-105 transition-transform group">
+                    বার্তা পাঠান <i class="fas fa-paper-plane ml-2 group-hover:animate-ping"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-amber-800 text-amber-100 py-16 text-center">
+        <div class="container mx-auto">
+            <p class="text-xl mb-4">&copy; <span id="currentYear"></span> সান্ডা সমাহার। সর্বস্বত্ব সংরক্ষিত এবং সান্ডাদের দ্বারা কঠোরভাবে নজরদারিতে!</p>
+            <p class="text-md mb-6">সতর্কবাণী: আমাদের সান্ডারা এতই আকর্ষণীয় যে আপনি অন্য কোনো পোষা প্রাণীর কথা ভাবতেও পারবেন না (এবং আমরা এর জন্য দুঃখিত নই)।</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-amber-200 hover:text-white text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
+                <a href="#" class="text-amber-200 hover:text-white text-3xl transition-colors"><i class="fab fa-instagram-square"></i></a>
+                <a href="#" class="text-amber-200 hover:text-white text-3xl transition-colors"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="text-amber-200 hover:text-white text-3xl transition-colors"><i class="fab fa-youtube-square"></i></a>
+            </div>
+            <p class="text-sm">একটি অতি গোপন সান্ডা সোসাইটি দ্বারা পরিচালিত। বিস্তারিত জানতে, আপনার নিকটতম সান্ডার সাথে যোগাযোগ করুন (যদি সে কথা বলতে রাজি হয়)।</p>
+        </div>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCheckoutModal()">&times;</span>
+            <h2 class="text-3xl font-bold text-amber-700 mb-6 text-center">অর্ডার করছেন নাকি? দারুণ! 🎉</h2>
+            <div id="checkoutProductDetails" class="text-center mb-6">
+                </div>
+            <form id="checkoutForm">
+                <input type="hidden" id="checkoutProductId">
+                <div class="mb-4">
+                    <label for="customerName" class="block text-amber-700 text-sm font-bold mb-2">আপনার নাম (যে নামে সান্ডা আপনাকে চিনবে):</label>
+                    <input type="text" id="customerName" class="shadow appearance-none border-2 border-amber-200 rounded-lg w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="customerAddress" class="block text-amber-700 text-sm font-bold mb-2">ঠিকানা (যেখানে সান্ডা তার নতুন সাম্রাজ্য গড়বে):</label>
+                    <textarea id="customerAddress" rows="3" class="shadow appearance-none border-2 border-amber-200 rounded-lg w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500" required></textarea>
+                </div>
+                <div class="mb-6">
+                    <label for="customerPhone" class="block text-amber-700 text-sm font-bold mb-2">ফোন নম্বর (সান্ডা জরুরি প্রয়োজনে মিসড কল দেবে):</label>
+                    <input type="tel" id="customerPhone" class="shadow appearance-none border-2 border-amber-200 rounded-lg w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                </div>
+                <div class="flex justify-between items-center">
+                    <button type="button" class="btn-secondary" onclick="closeCheckoutModal()">এখন না, পরে ভাববো 🤔</button>
+                    <button type="submit" class="btn-primary">অর্ডার কনফার্ম! (সান্ডা আসছে! 🚀)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bill Modal -->
+    <div id="billModal" class="modal">
+        <div id="billModalContent" class="modal-content">
+            <span class="close-btn" onclick="closeBillModal()">&times;</span>
+            <h2 class="text-3xl font-bold text-amber-700 mb-6 text-center">আপনার রাজকীয় বিল 🧾✨</h2>
+            <div id="billDetails">
+                </div>
+            <div class="mt-8 flex justify-between items-center">
+                <button type="button" class="btn-secondary" onclick="closeBillModal()">বন্ধ করুন</button>
+                <button type="button" class="btn-primary" onclick="printBill()">বিল প্রিন্ট করুন (এবং ফ্রেমে বাঁধিয়ে রাখুন!) <i class="fas fa-print ml-2"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(() => { // Simulate loading time for demo
+                    preloader.style.display = 'none';
+                }, 1500);
+            }
+        });
+
+        // Sanda Facts
+        const sandaFacts = [
+            "কিছু সান্ডা নাকি তাদের লেজ দিয়ে ভবিষ্যৎবাণী করতে পারে... তবে বেশিরভাগ সময়ই তা ভুল হয়!",
+            "সান্ডারা দিনে ১৮ ঘণ্টা ঘুমিয়েও ক্লান্তি বোধ করতে পারে। তাদের এই সুপারপাওয়ারটি শিক্ষণীয়!",
+            "একটি গড় সান্ডা বছরে প্রায় ৫০০টি জোকস শোনে, কিন্তু হাসে মাত্র দুটিতে। তাদের সেন্স অফ হিউমার খুব উঁচু মানের!",
+            "বিজ্ঞানীরা প্রমাণ করেছেন, সান্ডাদের দিকে তাকিয়ে হাসলে আপনার জীবনের আয়ু ৩ সেকেন্ড বেড়ে যায় (গবেষণা চলমান)।",
+            "সবচেয়ে জনপ্রিয় সান্ডা টিকটকারের ফলোয়ার সংখ্যা নাকি ৩ মিলিয়ন! (পোকাদের মধ্যে)।"
+        ];
+        document.getElementById('dailySandaFact').innerText = sandaFacts[Math.floor(Math.random() * sandaFacts.length)];
+
+        // Product Data
+        const products = [
+            { 
+                id: 'sanda1', 
+                name: 'চঞ্চল সান্ডা "বিদ্যুৎ"', 
+                price: 3850, 
+                weight: '৫০০ গ্রাম (দৌড়ানোর পর ৪৯০ গ্রাম)', 
+                image: 'https://placehold.co/600x400/FFF3E0/4A3B31?text=চঞ্চল+সান্ডা+⚡️💨&font=Hind%20Siliguri', 
+                description: 'এই সান্ডা এত দ্রুত যে কফি বানানোর আগেই আপনার মগ থেকে চুমুক দিয়ে দেবে! ওর নিজের জিম রয়েছে আপনার জুতার বাক্সে।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda2', 
+                name: 'ভাবুক সান্ডা "নিউটন"', 
+                price: 4500, 
+                weight: '৬০০ গ্রাম (চিন্তার ভারে)', 
+                image: 'https://placehold.co/600x400/E8EAF6/3F51B5?text=ভাবুক+সান্ডা+🤔🍎&font=Hind%20Siliguri', 
+                description: 'এই সান্ডা বেশিরভাগ সময় জানালার বাইরে তাকিয়ে থাকে আর ভাবে, "যদি আপেল আমার মাথায় না পড়ে বালিতে পড়তো?" মহাবিশ্বের সব রহস্য ওর মাথায় ঘুরপাক খায়।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda3', 
+                name: 'রসিক সান্ডা "হাসমত"', 
+                price: 4950, 
+                weight: '৫৫০ গ্রাম (হাসতে হাসতে কমে যায়)', 
+                image: 'https://placehold.co/600x400/FFF9C4/FBC02D?text=রসিক+সান্ডা+😂🎤&font=Hind%20Siliguri', 
+                description: 'স্ট্যান্ড-আপ কমেডিয়ান হওয়ার স্বপ্ন দেখে। ওর জোকস শুনে আপনার ঘরের টিকটিকিরাও হেসে কুটিকুটি হয়। তবে সাবধান, মাঝে মাঝে পচা জোকসও বলে!',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda4', 
+                name: 'শিল্পী সান্ডা "পিকাসো"', 
+                price: 5800, 
+                weight: '৪৮০ গ্রাম (তুলি ধরার জন্য হালকা)', 
+                image: 'https://placehold.co/600x400/E1F5FE/0288D1?text=শিল্পী+সান্ডা+🎨🖌️&font=Hind%20Siliguri', 
+                description: 'বালির ক্যানভাসে লেজ দিয়ে অ্যাবস্ট্রাক্ট আর্ট করে। ওর আঁকা ছবি আন্তর্জাতিক সান্ডা আর্ট গ্যালারিতে প্রদর্শিত হয়েছে (স্বপ্নে)।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda5', 
+                name: 'ডিজে সান্ডা "বিটস্"', 
+                price: 6200, 
+                weight: '৬৫০ গ্রাম (সাবউফারের মতো ভাইব্রেশন)', 
+                image: 'https://placehold.co/600x400/F3E5F5/8E24AA?text=ডিজে+সান্ডা+🎧🎶&font=Hind%20Siliguri', 
+                description: 'রাতের বেলা মরুভূমির পোকাদের জন্য আন্ডারগ্রাউন্ড পার্টি আয়োজন করে। ওর বিটস শুনলে গাছের পাতাও নাচতে শুরু করে!',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda6', 
+                name: 'অভিযাত্রী সান্ডা "ইন্ডিয়ানা জোনস"', 
+                price: 5400, 
+                weight: '৫৭০ গ্রাম (অ্যাডভেঞ্চারের জন্য ফিট)', 
+                image: 'https://placehold.co/600x400/D7CCC8/5D4037?text=অভিযাত্রী+সান্ডা+🧭🗺️&font=Hind%20Siliguri', 
+                description: 'আপনার বুকশেলফের পেছনে হারানো সভ্যতার খোঁজ করে। ওর কাছে নাকি এল ডোরাডোর ম্যাপও আছে (খাবার মেন্যু মনে করে)।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda7', 
+                name: 'গায়ক সান্ডা "এরিজিৎ টিকটিকি"', 
+                price: 5950, 
+                weight: '৫৩০ গ্রাম (সুরের জাদুতে হালকা)', 
+                image: 'https://placehold.co/600x400/FFCDD2/C62828?text=গায়ক+সান্ডা+🎤🎶&font=Hind%20Siliguri', 
+                description: 'ওর গান শুনলে মরুভূমির ঝিঝি পোকারাও কেঁদে ফেলে (তবে সেটা আনন্দের কান্না নাকি কষ্টের, তা নিশ্চিত নয়)।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda8', 
+                name: 'গেমার সান্ডা "প্রো-প্লেয়ার"', 
+                price: 6800, 
+                weight: '৬২০ গ্রাম (কন্ট্রোলারের ওজনসহ)', 
+                image: 'https://placehold.co/600x400/C8E6C9/2E7D32?text=গেমার+সান্ডা+🎮🏆&font=Hind%20Siliguri', 
+                description: 'এই সান্ডা আপনার সাথে "পোকা ক্রাশ সাগা" খেলতে পারে। তবে সাবধান, সে জিতলে আপনার মোবাইলটাই দাবি করে বসতে পারে!',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda9', 
+                name: 'কবি সান্ডা "রুদ্র মুহম্মদ সান্ডাউল্লাহ"', 
+                price: 5100, 
+                weight: '৫১৫ গ্রাম (কবিতার ভারে)', 
+                image: 'https://placehold.co/600x400/EDE7F6/512DA8?text=কবি+সান্ডা+📜✒️&font=Hind%20Siliguri', 
+                description: 'বালির উপর বিরহের কবিতা লেখে আর দীর্ঘশ্বাস ফেলে। তার কবিতার বিষয়বস্তু সাধারণত হারানো পোকা অথবা পূর্ণিমা রাত।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda10', 
+                name: 'গুপ্তচর সান্ডা "জিরো জিরো টিকটিকি"', 
+                price: 7200, 
+                weight: '৪৭০ গ্রাম (চোরের মতো হালকা)', 
+                image: 'https://placehold.co/600x400/B0BEC5/37474F?text=গুপ্তচর+সান্ডা+🕶️💼&font=Hind%20Siliguri', 
+                description: 'আপনার ঘরের গোপন তথ্য সংগ্রহ করে (যেমন, ফ্রিজে কী আছে)। তার কাছে একটি অদৃশ্য জ্যাকেট এবং বিষাক্ত পোকা-শুঁড় আছে (খেলনা)।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda11', 
+                name: 'যোগগুরু সান্ডা "বাবা সান্ডানন্দ"', 
+                price: 5600, 
+                weight: '৫৪০ গ্রাম (ধ্যানে মগ্ন)', 
+                image: 'https://placehold.co/600x400/FFCCBC/D84315?text=যোগগুরু+সান্ডা+🧘‍♂️🕉️&font=Hind%20Siliguri', 
+                description: 'এমন সব যোগাসন করে যা দেখলে আপনি অবাক হয়ে যাবেন। তার প্রিয় আসন "মরু-শবাসন" (সারাদিন ঘুম)।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            },
+            { 
+                id: 'sanda12', 
+                name: 'শেফ সান্ডা "গর্ডন র‍্যাম-সান্ডা"', 
+                price: 6500, 
+                weight: '৬১০ গ্রাম (পেটুক কিনা!)', 
+                image: 'https://placehold.co/600x400/A5D6A7/388E3C?text=শেফ+সান্ডা+🧑‍🍳🔥&font=Hind%20Siliguri', 
+                description: 'রান্নাঘরে ঢুকে নতুন রেসিপি আবিষ্কারের চেষ্টা করে। তার সিগনেচার ডিশ "পোকা ফ্রাই উইথ বালি সস" (তবে চেখে দেখার আগে ভাবুন)।',
+                onerror: "this.src='https://placehold.co/600x400/grey/white?text=ছবি+উধাও!👻'"
+            }
+        ];
+
+        const productListDiv = document.getElementById('productList');
+        products.forEach(product => {
+            const card = `
+                <div class="card transform transition-all duration-300 hover:shadow-2xl flex flex-col">
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onerror="${product.onerror}">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold text-amber-700 mb-2">${product.name}</h3>
+                        <p class="text-gray-600 mb-3 text-sm h-24 overflow-y-auto flex-grow">${product.description}</p>
+                        <p class="text-gray-500 mb-1 text-xs">ওজন: ${product.weight}</p>
+                        <p class="text-2xl font-extrabold text-amber-600 mb-5">${product.price.toLocaleString('bn-BD')} ৳</p>
+                        <button class="btn-primary w-full py-3 px-4 font-semibold text-lg mt-auto" onclick="openCheckoutModal('${product.id}')">
+                            <i class="fas fa-shopping-cart mr-2"></i>এখনি ঘরে আনুন
+                        </button>
+                    </div>
+                </div>
+            `;
+            productListDiv.innerHTML += card;
+        });
+
+        // Modal Elements
+        const checkoutModal = document.getElementById('checkoutModal');
+        const billModal = document.getElementById('billModal');
+        const checkoutProductDetailsDiv = document.getElementById('checkoutProductDetails');
+        const checkoutForm = document.getElementById('checkoutForm');
+        const billDetailsDiv = document.getElementById('billDetails');
+        const checkoutProductIdInput = document.getElementById('checkoutProductId');
+
+        function openCheckoutModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            checkoutProductIdInput.value = productId;
+            checkoutProductDetailsDiv.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="w-40 h-40 object-cover mx-auto rounded-lg mb-4 shadow-md border-2 border-amber-300" onerror="${product.onerror}">
+                <h3 class="text-xl font-semibold text-amber-700">${product.name}</h3>
+                <p class="text-lg text-amber-600 font-bold">${product.price.toLocaleString('bn-BD')} ৳</p>
+            `;
+            checkoutModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeCheckoutModal() {
+            checkoutModal.style.display = 'none';
+            checkoutForm.reset();
+            document.body.style.overflow = 'auto';
+        }
+
+        checkoutForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const productId = checkoutProductIdInput.value;
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const customerName = document.getElementById('customerName').value;
+            const customerAddress = document.getElementById('customerAddress').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+
+            if (!customerName || !customerAddress || !customerPhone) {
+                alert('গুরুত্বপূর্ণ তথ্যগুলো দিন, নাহলে সান্ডা আপনার বাড়ি চিনবে কীভাবে?');
+                return;
+            }
+            
+            const currentDate = new Date();
+            const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+            const orderId = `SANDA-${Date.now().toString().slice(-7)}`;
+
+            billDetailsDiv.innerHTML = `
+                <div class="text-left space-y-3 text-md text-gray-700">
+                    <p><strong>অর্ডার আইডি (আপনার গোপন কোড):</strong> ${orderId}</p>
+                    <p><strong>তারিখ (যেদিন সান্ডা ভাগ্য আপনার দুয়ারে):</strong> ${formattedDate}</p>
+                    <hr class="my-3 border-amber-300">
+                    <h3 class="text-xl font-semibold text-amber-700 mt-4 mb-2">ক্রেতার পরিচয় (যিনি সান্ডার নতুন বস):</h3>
+                    <p><strong>নাম:</strong> ${customerName}</p>
+                    <p><strong>ঠিকানা (সান্ডার নতুন রাজত্ব):</strong> ${customerAddress}</p>
+                    <p><strong>ফোন (সান্ডার জরুরি কললিস্টে):</strong> ${customerPhone}</p>
+                    <hr class="my-3 border-amber-300">
+                    <h3 class="text-xl font-semibold text-amber-700 mt-4 mb-2">পণ্যের বিবরণ (আপনার জীবনের নতুন কমেডিয়ান):</h3>
+                    <table class="w-full border-collapse border border-amber-300 mt-2">
+                        <thead>
+                            <tr class="bg-amber-100">
+                                <th class="border border-amber-300 p-2 text-left">পণ্য</th>
+                                <th class="border border-amber-300 p-2 text-center">পরিমাণ</th>
+                                <th class="border border-amber-300 p-2 text-right">মূল্য</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-amber-300 p-2">${product.name}</td>
+                                <td class="border border-amber-300 p-2 text-center">১ টি (এবং একরাশ হাসি)</td>
+                                <td class="border border-amber-300 p-2 text-right">${product.price.toLocaleString('bn-BD')} ৳</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="font-bold bg-amber-100">
+                                <td colspan="2" class="border border-amber-300 p-2 text-right">মোট খরচ (হাসির জন্য অমূল্য!):</td>
+                                <td class="border border-amber-300 p-2 text-right">${product.price.toLocaleString('bn-BD')} ৳</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                     <p class="text-center mt-8 text-md text-amber-600 font-semibold">ধন্যবাদ! আপনার সান্ডা শীঘ্রই রওয়ানা দেবে... যদি সে তার সানগ্লাস খুঁজে পায় আর কি!</p>
+                </div>
+            `;
+
+            closeCheckoutModal();
+            billModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeBillModal() {
+            billModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function printBill() {
+            window.print();
+        }
+        
+        window.onclick = function(event) {
+            if (event.target == checkoutModal) closeCheckoutModal();
+            if (event.target == billModal) closeBillModal();
+        }
+
+        // Scroll animations
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const sectionObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        sections.forEach(section => sectionObserver.observe(section));
+
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                if(name && email && message){
+                    alert(`ধন্যবাদ ${name}! আপনার বার্তা আমাদের হেড সান্ডার কাছে পাঠানো হয়েছে। সে যদি তার জরুরি ঘুম থেকে ওঠে, তাহলে শীঘ্রই যোগাযোগ করবে!`);
+                    contactForm.reset();
+                } else {
+                    alert('আরে বন্ধু! সবগুলো ঘর পূরণ না করলে সান্ডারা রাগ করবে তো!');
+                }
+            });
+        }
+
+        // Dynamic Year in Footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const icon = question.querySelector('i');
+            question.addEventListener('click', () => {
+                const isOpen = item.classList.contains('open');
+                faqItems.forEach(i => {
+                    i.classList.remove('open');
+                    i.querySelector('.faq-question i').classList.remove('fa-chevron-up');
+                    i.querySelector('.faq-question i').classList.add('fa-chevron-down');
+                });
+                if (!isOpen) {
+                    item.classList.add('open');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenuButton.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+            // Close mobile menu when a link is clicked
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.querySelector('i').classList.remove('fa-times');
+                    mobileMenuButton.querySelector('i').classList.add('fa-bars');
+                });
+            });
+        }
+
+    </script>
+</body>
+</html>
